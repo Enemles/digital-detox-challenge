@@ -4,13 +4,11 @@ import {
   TrendingUp, 
   Calendar, 
   Leaf, 
-  Zap, 
   Mail,
   Cloud,
   Tv,
   Smartphone,
-  BarChart3,
-  PieChart
+  BarChart3
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { ProgressBar } from '../ui/ProgressBar';
@@ -211,7 +209,7 @@ const Statistics: React.FC = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {weeklyData.map((data, _index) => (
+                {weeklyData.map((data) => (
                   <div key={data.day} className="flex items-center gap-4">
                     <div className="w-12 text-sm font-medium text-gray-600">
                       {data.day}
@@ -251,7 +249,7 @@ const Statistics: React.FC = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
-                {goals.map((goal, _index) => (
+                {goals.map((goal) => (
                   <div key={goal.title} className="space-y-2">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
@@ -267,7 +265,7 @@ const Statistics: React.FC = () => {
                     <ProgressBar
                       value={goal.current}
                       max={goal.target}
-                      variant={goal.color as 'success' | 'warning' | 'primary' | 'danger'}
+                      variant={goal.color === 'primary' ? 'success' : goal.color as 'success' | 'warning' | 'danger'}
                       size="sm"
                       showPercentage
                     />
@@ -296,7 +294,7 @@ const Statistics: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Graphique en barres */}
               <div className="space-y-4">
-                {categoryBreakdown.map((category, _index) => (
+                {categoryBreakdown.map((category) => (
                   <div key={category.category} className="flex items-center gap-4">
                     <div className="flex items-center gap-2 w-32">
                       <category.icon className="w-4 h-4 text-gray-500" />

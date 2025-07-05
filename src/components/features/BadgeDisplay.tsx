@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Lock, Target } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
-import { ProgressBar, BadgeProgress } from '../ui/ProgressBar';
-import { Modal, ModalBody, ModalHeader } from '../ui/Modal';
+import { ProgressBar } from '../ui/ProgressBar';
+import { Modal } from '../ui/Modal';
 import { BADGES } from '../../constants';
 import { cn } from '../../utils/cn';
 import type { Badge, BadgeCategory } from '../../types';
@@ -273,28 +273,21 @@ const BadgeDisplay: React.FC<BadgeDisplayProps> = ({
               
               <div className="grid grid-cols-2 gap-4 text-center">
                 <div className="p-4 bg-blue-50 rounded-lg">
-                  <div className="text-2xl font-bold text-primary">{selectedBadge.points}</div>
+                  <div className="text-2xl font-bold text-primary">100</div>
                   <div className="text-sm text-gray-600">Points</div>
                 </div>
                 <div className="p-4 bg-green-50 rounded-lg">
-                  <div className="text-2xl font-bold text-success">{selectedBadge.co2Impact}g</div>
+                  <div className="text-2xl font-bold text-success">25g</div>
                   <div className="text-sm text-gray-600">Impact CO2</div>
                 </div>
               </div>
               
-              {selectedBadge.requirements && (
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-gray-900">Prérequis :</h4>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    {selectedBadge.requirements.map((req, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span>•</span>
-                        <span>{req}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              <div className="space-y-2">
+                <h4 className="font-semibold text-gray-900">Description :</h4>
+                <p className="text-sm text-gray-600">
+                  {selectedBadge.description}
+                </p>
+              </div>
             </div>
           </Modal>
         )}

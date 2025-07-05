@@ -90,6 +90,8 @@ interface AppActions {
   // Actions utilitaires
   resetApp: () => void;
   getRandomEncouragementMessage: () => string;
+  
+  resetStats: () => void;
 }
 
 const initialState: AppState = {
@@ -432,16 +434,77 @@ export const useAppStore = create<AppState & AppActions>()(
       
       // Actions utilitaires
       resetApp: () => {
-        set(initialState);
+        set(() => ({
+          user: null,
+          userStats: {
+            totalXP: 0,
+            currentLevel: 1,
+            challengesCompleted: 0,
+            totalCO2Saved: 0,
+            streak: 0,
+            lastActionDate: new Date(),
+            weeklyProgress: {},
+            stats: {
+              daily: { co2Saved: 0, emailsDeleted: 0, streamingReduced: 0, cloudCleaned: 0 },
+              weekly: { co2Saved: 0, emailsDeleted: 0, streamingReduced: 0, cloudCleaned: 0 },
+              monthly: { co2Saved: 0, emailsDeleted: 0, streamingReduced: 0, cloudCleaned: 0 },
+              yearly: { co2Saved: 0, emailsDeleted: 0, streamingReduced: 0, cloudCleaned: 0 }
+            }
+          },
+          isFirstVisit: true,
+          onboarding: {
+            step: 0,
+            isCompleted: false,
+            responses: [],
+            totalSteps: 5
+          },
+          challenges: [],
+          completedChallenges: [],
+          badges: BADGES.map(badge => ({ ...badge, earnedAt: undefined, progress: 0 })),
+          ecoTips: [],
+          notifications: [],
+          settings: {
+            theme: 'light',
+            language: 'fr',
+            notifications: true,
+            privacy: {
+              shareStats: false,
+              shareProgress: false,
+              allowAnalytics: true,
+            },
+            accessibility: {
+              reducedMotion: false,
+              highContrast: false,
+              fontSize: 'medium',
+            }
+          },
+          carbonCalculation: null,
+          recentActions: []
+        }));
       },
       
       getRandomEncouragementMessage: () => {
-        const messages = ENCOURAGEMENT_MESSAGES;
+        const messages = [
+          "Chaque petit geste compte ! 🌱",
+          "Tu fais une vraie différence ! 🌍",
+          "Continue comme ça ! 💪",
+          "Ensemble, protégeons notre planète ! 🌿",
+          "Bravo pour ton engagement ! 👏"
+        ];
         return messages[Math.floor(Math.random() * messages.length)];
       },
+      
+      resetStats: () => set(() => ({
+        stats: {
+          daily: { co2Saved: 0, emailsDeleted: 0, streamingReduced: 0, cloudCleaned: 0 },
+          weekly: { co2Saved: 0, emailsDeleted: 0, streamingReduced: 0, cloudCleaned: 0 },
+          monthly: { co2Saved: 0, emailsDeleted: 0, streamingReduced: 0, cloudCleaned: 0 },
+          yearly: { co2Saved: 0, emailsDeleted: 0, streamingReduced: 0, cloudCleaned: 0 }
+        }
+      })),
     }),
     {
-      name: 'digital-detox-storage',
+      name: 'digital-detox-app-store',
       version: 1,
     }
   )
